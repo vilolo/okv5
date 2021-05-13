@@ -10,6 +10,7 @@ import (
 
 func Main()  {
 	body := utils.Get("/api/v5/account/account-position-risk")
+	fmt.Println(body)
 	ticker := structs.Ticker{}
 	err := json.Unmarshal([]byte(body), &ticker)
 	if err != nil {
