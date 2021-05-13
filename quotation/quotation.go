@@ -11,12 +11,12 @@ import (
 func Main()  {
 	body := utils.Get("/api/v5/market/ticker?instId=BTC-USD-SWAP")
 	fmt.Println(body)
-	ticker := structs.Ticker{}
-	err := json.Unmarshal([]byte(body), &ticker)
+	resp := structs.APIResponse{}
+	err := json.Unmarshal([]byte(body), &resp)
 	if err != nil {
 		fmt.Printf("json.Unmarshal failed, err:%v\n", err)
 		return
 	}
 
-	fmt.Println(ticker)
+	fmt.Println(resp)
 }
