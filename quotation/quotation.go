@@ -18,6 +18,6 @@ func Main()  {
 		return
 	}
 
-	fmt.Println(resp.Data[0])
+	fmt.Println(resp.Data[0]["instType"])
 	fmt.Println(reflect.TypeOf(resp.Data[0]))
 }
