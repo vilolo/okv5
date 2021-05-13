@@ -9,7 +9,7 @@ import (
 )
 
 func Main()  {
-	body := utils.Get("/api/v5/account/account-position-risk")
+	body := utils.Get("/api/v5/market/ticker?instId=BTC-USD-SWAP")
 	fmt.Println(body)
 	ticker := structs.Ticker{}
 	err := json.Unmarshal([]byte(body), &ticker)
