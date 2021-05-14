@@ -7,6 +7,10 @@ type Conf struct {
 	Timestamp string
 }
 
+type Setting struct {
+    InstId string		//instId	String	是	产品ID，如 BTC-USD-SWAP
+}
+
 type APIResponse struct {
 	Code string                   `json:"code"`
 	Msg  string                   `json:"msg"`

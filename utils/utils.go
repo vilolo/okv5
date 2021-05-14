@@ -27,7 +27,7 @@ func init(){
     }
 }
 
-func Get(url string) string {
+func Get(url string) []map[string]interface{} {
 	client := &http.Client{}
     reqest, err := http.NewRequest("GET", baseUrl+url, nil)
 
@@ -45,14 +45,25 @@ func Get(url string) string {
 	reqest.Header.Add("OK-ACCESS-PASSPHRASE", conf.Passphrase)
 
 	//处理返回结果
-    response, _ := client.Do(reqest)
+    response, err := client.Do(reqest)
+	if err != nil {
+		fmt.Printf("err:%v\n", err)
+		return nil
+	}
     defer response.Body.Close()
 
 	body, _ := ioutil.ReadAll(response.Body)
     //fmt.Println(string(body))
     // fmt.Printf("Get request result: %s\n", string(body))
 	
-	return string(body)
+	resp := structs.APIResponse{}
+	err = json.Unmarshal([]byte(string(body)), &resp)
+	if err != nil {
+		fmt.Printf("json.Unmarshal failed, err:%v\n", err)
+		return nil
+	}
+
+	return resp.Data
 }
 
 func hmacSha256(data string, secret string) string {
