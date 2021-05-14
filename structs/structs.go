@@ -14,7 +14,7 @@ type Setting struct {
 type APIResponse struct {
 	Code string                   `json:"code"`
 	Msg  string                   `json:"msg"`
-	Data []map[string]interface{} `json:"data"`
+	Data []interface{} `json:"data"`
 }
 
 //获取单个产品行情信息

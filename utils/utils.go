@@ -27,7 +27,7 @@ func init(){
     }
 }
 
-func Get(url string) []map[string]interface{} {
+func Get(url string) []interface{} {
 	client := &http.Client{}
     reqest, err := http.NewRequest("GET", baseUrl+url, nil)
 
