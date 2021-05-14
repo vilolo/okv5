@@ -20,7 +20,7 @@ func history(setting structs.Setting) {
 	var ma5 []float64
 	var ma10 []float64
 
-	for _, origin := range data{
+	for i, origin := range data{
 		switch reflect.TypeOf(origin).Kind() {
 			case reflect.Slice, reflect.Array:
 				s := reflect.ValueOf(origin)
@@ -28,9 +28,14 @@ func history(setting structs.Setting) {
 				// 	fmt.Println(s.Index(i))
 				// }
 
-				tt,_ := strconv.ParseFloat(s.Index(1).Interface().(string), 32)
-				ma5 = append(ma5, tt)
-				ma10 = append(ma10, tt)
+				cur,_ := strconv.ParseFloat(s.Index(1).Interface().(string), 32)
+
+				if i > 0 {
+					
+				}else{
+					ma5 = append(ma5, cur)
+					ma10 = append(ma10, cur)
+				}
 
 			case reflect.String:
 				s := reflect.ValueOf(origin)
