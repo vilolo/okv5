@@ -32,12 +32,8 @@ func history(setting structs.Setting) {
 
 				cur,_ := strconv.ParseFloat(s.Index(1).Interface().(string), 32)
 
-				if i > 0 {
-
-				}else{
-					ma5 = append(ma5, cur)
-					ma10 = append(ma10, cur)
-				}
+				ma5 = append(ma5, cur)
+				ma10 = append(ma10, cur)
 
 			case reflect.String:
 				s := reflect.ValueOf(data[i])
@@ -48,32 +44,6 @@ func history(setting structs.Setting) {
 				fmt.Println(t, " I am a int type variable.")
 		}
 	}
-
-	// for i, origin := range data{
-	// 	switch reflect.TypeOf(origin).Kind() {
-	// 		case reflect.Slice, reflect.Array:
-	// 			s := reflect.ValueOf(origin)
-	// 			// for i := 0; i < s.Len(); i++ {
-	// 			// 	fmt.Println(s.Index(i))
-	// 			// }
-
-	// 			cur,_ := strconv.ParseFloat(s.Index(1).Interface().(string), 32)
-
-	// 			if i > 0 {
-	// 			}else{
-	// 				ma5 = append(ma5, cur)
-	// 				ma10 = append(ma10, cur)
-	// 			}
-
-	// 		case reflect.String:
-	// 			s := reflect.ValueOf(origin)
-	// 			fmt.Println(s.String(), "I am a string type variable.")
-	// 		case reflect.Int:
-	// 			s := reflect.ValueOf(origin)
-	// 			t := s.Int()
-	// 			fmt.Println(t, " I am a int type variable.")
-	// 	}
-	// }
 
 	fmt.Println(ma5)
 }
