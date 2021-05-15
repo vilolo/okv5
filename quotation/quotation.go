@@ -17,76 +17,57 @@ func Main(setting structs.Setting)  {
 func history(setting structs.Setting) {
 	// data := utils.Get("/api/v5/market/history-candles?instId=" + setting.InstId)
 
-	data := [11][2]string{
-		{"1","1"},
-		{"2","2"},
-		{"3","3"},
-		{"4","4"},
-		{"5","5"},
-		{"6","6"},
-		{"7","7"},
-		{"8","8"},
-		{"9","9"},
-		{"10","10"},
-		{"11","11"},
+	data := [11][4]string{
+		{"1","1.111","1.111","1"},
+		{"2","2.111","2.111","2"},
+		{"3","3.111","3.111","3"},
+		{"4","4.111","4.111","4"},
+		{"5","5.111","5.111","5"},
+		{"6","6.111","6.111","6"},
+		{"7","7.111","7.111","7"},
+		{"8","8.111","8.111","8"},
+		{"9","9.111","9.111","9"},
+		{"10","10.111","10.111","10"},
+		{"11","11.111","11.111","11"},
 	}
+	
 	var ma5 []float64
 	var ma10 []float64
-	var t5 int
-	var t10 int
-	var tempCount float64
-	var tempVal float64
+
 	for i := len(data)-1; i>=0; i-- {
-		switch reflect.TypeOf(data[i]).Kind() {
-			case reflect.Slice, reflect.Array:
-				s := reflect.ValueOf(data[i])
-				cur,_ := strconv.ParseFloat(s.Index(1).Interface().(string), 32)
+		s := reflect.ValueOf(data[i])
+		curH,_ := strconv.ParseFloat(s.Index(2).Interface().(string), 32)
+		curL,_ := strconv.ParseFloat(s.Index(3).Interface().(string), 32)
+		cur := (curH + curL)/2
 
-				if i == len(data)-1 {
-					ma5 = append(ma5, cur)
-					ma10 = append(ma10, cur)
-				}else{
-					var ma5Temp float64 = 0
-					var ma10Temp float64 = 0
-					tempCount = 0
-					t5 = 4
-					t10 = 9
-					for j := i+1; j < len(data); j++ {
-						if t10 <= 0 {
-							break
-						}
-
-						tempVal, _ = strconv.ParseFloat(reflect.ValueOf(data[j]).Index(1).Interface().(string), 32)
-						tempCount = tempCount + tempVal
-
-						ma10Temp = tempCount
-
-						if t5 == 1 {
-							ma5Temp = tempCount
-						}
-
-						t5 --
-						t10 --
-					}
-
-					if ma5Temp == 0 {
-						ma5Temp = ma10Temp
-					}
-
-					ma5Temp = ma5Temp + cur
-					ma10Temp = ma10Temp + cur
-
-					ma5 = append(ma5, ma5Temp)
-					ma10 = append(ma10, ma10Temp)
+		if i != len(data)-1 {
+			//找前面的几根
+			var t5 = 1
+			var t10 = 1
+			var tempVal5 float64
+			var tempVal10 float64
+			for j := i+1; j <= len(data)-1; j++ {
+				if t10 > 9 {
+					break
 				}
 
-			case reflect.String:
-				s := reflect.ValueOf(data[i])
-				fmt.Println(s.String(), "I am a string type variable.")
-			case reflect.Int:
-				s := reflect.ValueOf(data[i])
-				t := s.Int()
-				fmt.Println(t, " I am a int type variable.")
+				tempH, _ := strconv.ParseFloat(reflect.ValueOf(data[j]).Index(2).Interface().(string), 32)
+				tempL, _ := strconv.ParseFloat(reflect.ValueOf(data[j]).Index(3).Interface().(string), 32)
+				tempVal := (tempH + tempL)/2
+				
+				if t5 <= 4 {
+					t5++
+					tempVal5 = tempVal5 + tempVal
+				}
+				t10++
+				tempVal10 = tempVal10 + tempVal
+			}
+
+			ma5 = append(ma5, (tempVal5+cur)/float64(t5))
+			ma10 = append(ma10, (tempVal10+cur)/float64(t10))
+		}else{
+			ma5 = append(ma5, cur)
+			ma10 = append(ma10, cur)
 		}
 	}
 
