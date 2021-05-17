@@ -5,6 +5,7 @@ import (
 	"./quotation"
 	"./structs"
 	// "errors"
+	"./trader"
 )
 
 var setting = structs.Setting{}
@@ -22,6 +23,7 @@ func main()  {
 	initSetting()
 
 	quotation.Main(setting)
+	trader.Td1(setting)
 
 	fmt.Println("<<< End")
 }

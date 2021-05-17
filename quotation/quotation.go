@@ -9,27 +9,33 @@ import (
 )
 
 func Main(setting structs.Setting)  {
-	history(setting)
-	
+	//ma5,ma10,上一根，当前
+	ma5,ma10,lastK := history(setting)
+	curT := ticker(setting)
+
+	fmt.Println(ma5)
+	fmt.Println(ma10)
+	fmt.Println(lastK)
+	fmt.Println(curT)
 }
 
 //获取历史100数据
-func history(setting structs.Setting) {
-	// data := utils.Get("/api/v5/market/history-candles?instId=" + setting.InstId)
+func history(setting structs.Setting) ([]float64, []float64, interface{}) {
+	data := utils.Get("/api/v5/market/history-candles?instId=" + setting.InstId)
 
-	data := [11][4]string{
-		{"1","1.111","1.111","1"},
-		{"2","2.111","2.111","2"},
-		{"3","3.111","3.111","3"},
-		{"4","4.111","4.111","4"},
-		{"5","5.111","5.111","5"},
-		{"6","6.111","6.111","6"},
-		{"7","7.111","7.111","7"},
-		{"8","8.111","8.111","8"},
-		{"9","9.111","9.111","9"},
-		{"10","10.111","10.111","10"},
-		{"11","11.111","11.111","11"},
-	}
+	// data := [11][4]string{
+	// 	{"1","1.111","1.111","1"},
+	// 	{"2","2.111","2.111","2"},
+	// 	{"3","3.111","3.111","3"},
+	// 	{"4","4.111","4.111","4"},
+	// 	{"5","5.111","5.111","5"},
+	// 	{"6","6.111","6.111","6"},
+	// 	{"7","7.111","7.111","7"},
+	// 	{"8","8.111","8.111","8"},
+	// 	{"9","9.111","9.111","9"},
+	// 	{"10","10.111","10.111","10"},
+	// 	{"11","11.111","11.111","11"},
+	// }
 	
 	var ma5 []float64
 	var ma10 []float64
@@ -71,8 +77,14 @@ func history(setting structs.Setting) {
 		}
 	}
 
-	fmt.Println(ma5)
-	fmt.Println(ma10)
+	lastK := reflect.ValueOf(data[0])
+
+	// fmt.Println(ma5)
+	// fmt.Println(ma10)
+	// fmt.Println(lastK)
+
+	return ma5, ma10, lastK
+
 }
 
 //获取当前数据
