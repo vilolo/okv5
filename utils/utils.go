@@ -82,7 +82,7 @@ func Post(url string, data map[string]string) []interface{}{
     }
 	
 	conf.Timestamp = time.Now().UTC().Format("2006-01-02T15:04:05.000Z")
-	sign := hmacSha256(conf.Timestamp + "POST" + url, conf.SecretKey)
+	sign := hmacSha256(conf.Timestamp + "POST" + url + result, conf.SecretKey)
 
 	//增加header选项
     reqest.Header.Add("OK-ACCESS-KEY", conf.APIKey)
