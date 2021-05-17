@@ -56,6 +56,7 @@ func Get(url string) []interface{} {
     defer response.Body.Close()
 
 	body, _ := ioutil.ReadAll(response.Body)
+	fmt.Println(string(body), "%%%%%%%%%")
     //fmt.Println(string(body))
     // fmt.Printf("Get request result: %s\n", string(body))
 	
@@ -105,7 +106,6 @@ func Post(url string, data map[string]string) []interface{}{
     // fmt.Printf("Get request result: %s\n", string(body))
 	
 	resp := structs.APIResponse{}
-	fmt.Println(string(body), "%%%%%%%%%")
 	err = json.Unmarshal([]byte(string(body)), &resp)
 	if err != nil {
 		fmt.Printf("json.Unmarshal failed, err:%v\n", err)
