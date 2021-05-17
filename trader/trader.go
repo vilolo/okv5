@@ -22,7 +22,7 @@ func Td1(setting structs.Setting){
 }
 
 func order(instId string, tdMode string, side string, ordType string, sz string){
-	data := map[string]string {"instId":instId,}
+	data := map[string]string {"instId":instId,"tdMode":tdMode,"side":side,"ordType":ordType,"sz":sz}
 	res := utils.Post("/api/v5/trade/order", data)
 	fmt.Println(res)
 }
