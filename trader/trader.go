@@ -8,6 +8,7 @@ import (
 
 func Td1(setting structs.Setting){
 	order(setting.InstId, "cross", "buy", "market", "1","long")
+	orderInfo(setting.InstId, "bb")
 }
 
 //tdMode	String	是	交易模式
@@ -31,5 +32,10 @@ func Td1(setting structs.Setting){
 func order(instId string, tdMode string, side string, ordType string, sz string, posSide string){
 	data := map[string]string {"instId":instId,"tdMode":tdMode,"side":side,"ordType":ordType,"sz":sz, "posSide":posSide}
 	res := utils.Post("/api/v5/trade/order", data)
+	fmt.Println(res)
+}
+
+func orderInfo(instId string, clOrdId string){
+	res := utils.Get("/api/v5/trade/order?instId="+instId+"&clOrdId="+clOrdId)
 	fmt.Println(res)
 }
