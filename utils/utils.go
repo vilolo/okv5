@@ -102,7 +102,7 @@ func Post(url string, data map[string]string) []interface{}{
     defer response.Body.Close()
 
 	body, _ := ioutil.ReadAll(response.Body)
-    //fmt.Println(string(body))
+    fmt.Println(string(body))
     // fmt.Printf("Get request result: %s\n", string(body))
 	
 	resp := structs.APIResponse{}

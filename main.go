@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"./quotation"
+	// "./quotation"
 	"./structs"
 	// "errors"
 	"./trader"
@@ -22,12 +22,17 @@ func main()  {
 	fmt.Println("Start >>>")
 	initSetting()
 
-	quotation.Main(setting)
-	trader.Td1(setting)
+	// quotation.Main(setting)
+
+	trader.Open1(setting,"buy","long")
+
+	// trader.Close1(setting, "long")
 
 	fmt.Println("<<< End")
 }
 
 func initSetting()  {
-	setting.InstId = "BTC-USD-SWAP"
+	setting.InstId = "SHIB-USDT-SWAP"
+	setting.Sz = "2000"
+	setting.TdMode = "cross"
 }

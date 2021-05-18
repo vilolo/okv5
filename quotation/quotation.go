@@ -9,6 +9,8 @@ import (
 )
 
 func Main(setting structs.Setting)  {
+	instruments()
+
 	//ma5,ma10,上一根，当前
 	ma5,ma10,lastK := history(setting)
 	curT := ticker(setting)
@@ -98,4 +100,11 @@ func ticker(setting structs.Setting) []interface{} {
 //深度
 func books(setting structs.Setting) []interface{} {
 	return utils.Get("/api/v5/market/books?instId=" + setting.InstId)
+}
+
+//获取交易产品基础信息
+func instruments(){
+	res := utils.Get("/api/v5/public/instruments?instType=SWAP")
+	utils.WriteLog(res)
+	fmt.Println("永续列表：",res)
 }

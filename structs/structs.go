@@ -9,6 +9,8 @@ type Conf struct {
 
 type Setting struct {
     InstId string		//instId	String	是	产品ID，如 BTC-USD-SWAP
+	Sz string		//sz	String	是	委托数量
+	TdMode string	//mgnMode	String	是	保证金模式	全仓：cross ； 逐仓： isolated
 }
 
 type APIResponse struct {
