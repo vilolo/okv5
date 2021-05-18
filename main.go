@@ -21,19 +21,19 @@ func main()  {
 
 	fmt.Println("Start >>>")
 	initSetting()
-	trader.SetLeverage(setting)
+	// trader.SetLeverage(setting)
 
 	// quotation.Main(setting)
 
-	trader.Open1(setting,"buy","long")
+	// trader.Open1(setting,"buy","long")
 
-	// trader.Close1(setting, "long")
+	trader.Close1(setting, "long")
 
 	fmt.Println("<<< End")
 }
 
 func initSetting()  {
 	setting.InstId = "SHIB-USDT-SWAP"
-	setting.Sz = "1000000"
+	setting.Sz = "1"
 	setting.TdMode = "cross"
 }
