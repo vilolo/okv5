@@ -21,6 +21,7 @@ func main()  {
 
 	fmt.Println("Start >>>")
 	initSetting()
+	trader.SetLeverage(setting)
 
 	// quotation.Main(setting)
 
