@@ -33,6 +33,6 @@ func main()  {
 
 func initSetting()  {
 	setting.InstId = "SHIB-USDT-SWAP"
-	setting.Sz = "20000"
+	setting.Sz = "1000000"
 	setting.TdMode = "cross"
 }
