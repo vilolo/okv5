@@ -70,6 +70,9 @@ func closePosition(instId string,posSide string,mgnMode string){
 
 //设置杠杆倍数
 func SetLeverage(setting structs.Setting){
-	data := map[string]string {"instId":setting.InstId,"lever":"75","mgnMode":setting.TdMode}
+	data := map[string]string {"instId":setting.InstId,"lever":"75","mgnMode":setting.TdMode,"posSide":"long"}
+	utils.Post("/api/v5/trade/close-position", data)
+
+	data = map[string]string {"instId":setting.InstId,"lever":"75","mgnMode":setting.TdMode,"posSide":"short"}
 	utils.Post("/api/v5/trade/close-position", data)
 }
