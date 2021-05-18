@@ -7,7 +7,7 @@ import (
 )
 
 func Open1(setting structs.Setting, side string, posSide string){
-	order(setting.InstId, "cross", side, "market", setting.Sz, posSide, "testlong")
+	order(setting.InstId, "cross", side, "market", setting.Sz, posSide, "test")
 	// orderInfo(setting.InstId, "bb")
 
 	//行情分析后得到是否下单
