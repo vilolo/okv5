@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	// "./quotation"
+	"./quotation"
 	"./structs"
 	// "errors"
-	"./trader"
+	// "./trader"
 )
 
 var setting = structs.Setting{}
@@ -21,19 +21,15 @@ func main()  {
 
 	fmt.Println("Start >>>")
 	initSetting()
-	// trader.SetLeverage(setting)
-
-	// quotation.Main(setting)
-
+	quotation.Main(setting)
 	// trader.Open1(setting,"buy","long")
-
-	trader.Close1(setting, "long")
-
+	// trader.Close1(setting, "long")
 	fmt.Println("<<< End")
 }
 
 func initSetting()  {
-	setting.InstId = "SHIB-USDT-SWAP"
+	// setting.InstId = "SHIB-USDT-SWAP"
+	setting.InstId = "ETH-USD-SWAP"
 	setting.Sz = "1"
 	setting.TdMode = "cross"
 }

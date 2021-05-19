@@ -76,3 +76,7 @@ func SetLeverage(setting structs.Setting){
 	data = map[string]string {"instId":setting.InstId,"lever":"75","mgnMode":setting.TdMode,"posSide":"short"}
 	utils.Post("/api/v5/trade/close-position", data)
 }
+
+func Positions(setting structs.Setting){
+	utils.Get("/api/v5/account/positions")
+}

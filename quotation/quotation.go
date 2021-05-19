@@ -8,21 +8,34 @@ import (
 	"strconv"
 )
 
+var ma5 []float64
+var ma10 []float64
+var lastK interface{}
+
+var curT interface{}
+
 func Main(setting structs.Setting)  {
-	instruments()
+
+	chHistory := make(chan int)
+	
+	chTicker := make(chan int)
 
 	//ma5,ma10,上一根，当前
-	ma5,ma10,lastK := history(setting)
-	curT := ticker(setting)
+	go history(setting, &chHistory)
 
-	fmt.Println(ma5)
-	fmt.Println(ma10)
-	fmt.Println(lastK)
-	fmt.Println(curT)
+	go ticker(setting, &chTicker)
+
+	<- chHistory
+	<- chTicker
+
+	fmt.Println("ma5====",ma5)
+	fmt.Println("ma10====",ma10)
+	fmt.Println("lastK====",lastK)
+	fmt.Println("curT====",curT)
 }
 
 //获取历史100数据
-func history(setting structs.Setting) ([]float64, []float64, interface{}) {
+func history(setting structs.Setting, ch *chan int) {
 	data := utils.Get("/api/v5/market/history-candles?instId=" + setting.InstId)
 
 	// data := [11][4]string{
@@ -39,8 +52,8 @@ func history(setting structs.Setting) ([]float64, []float64, interface{}) {
 	// 	{"11","11.111","11.111","11"},
 	// }
 	
-	var ma5 []float64
-	var ma10 []float64
+	// var ma5 []float64
+	// var ma10 []float64
 
 	for i := len(data)-1; i>=0; i-- {
 		s := reflect.ValueOf(data[i])
@@ -79,19 +92,22 @@ func history(setting structs.Setting) ([]float64, []float64, interface{}) {
 		}
 	}
 
-	lastK := reflect.ValueOf(data[0])
+	if len(data) > 0 {
+		lastK = reflect.ValueOf(data[0])
+	}
 
 	// fmt.Println(ma5)
 	// fmt.Println(ma10)
 	// fmt.Println(lastK)
 
-	return ma5, ma10, lastK
-
+	*ch <- 1
+	// return ma5, ma10, lastK
 }
 
 //获取当前数据
-func ticker(setting structs.Setting) []interface{} {
-	return utils.Get("/api/v5/market/ticker?instId=" + setting.InstId)
+func ticker(setting structs.Setting, ch *chan int) {
+	curT = utils.Get("/api/v5/market/ticker?instId=" + setting.InstId)
+	*ch <- 1
 
 	// fmt.Println(resp.Data[0]["instType"])
 	// fmt.Println(reflect.TypeOf(resp.Data[0]))
